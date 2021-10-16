@@ -161,7 +161,9 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Yajra\Datatables\DatatablesServiceProvider::class, 
+        Yajra\Datatables\DatatablesServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
+
         /*
          * Package Service Providers...
          */
@@ -228,6 +230,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
+
     ],
 
 ];

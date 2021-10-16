@@ -14,24 +14,28 @@
         </div>
     </div>
 </div>
-<div class="content">
+
+<div class="pt-3">
+    <a href="{{route('admin.admin-user.create')}}" class="btn btn-primary"> <i class=" fas fa-plus-circle"></i> Create Admin User</a>
+</div>
+
+<div class="content py-3">
         <div class="card">
             <div class="card-body">
                 <table  class="table table-bordered Datatable" >
                     <thead>
-                        <tr>
+                        <tr class="bg-light">
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Phone</th>
+                            <th>IP</th>
+                            <th>User Agent</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($users as $user )
-                            <tr>
-                                <td>{{$user->name}}</td>
-                                <td>{{$user->email}}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
         </div>
@@ -41,31 +45,78 @@
 @section('scripts')
 
     <script>
-             $(document).ready(function() {
-                $('.Datatable').DataTable();
-             });
+    $(document).ready(function() {
+       var table = $('.Datatable').DataTable( {
+            processing : true,
+            serverSide : true,
+            ajax : "/admin/admin-user/datatable/ssd",
+            columns:[
+                {
+                    data:"name",
+                    name:"name"
+                },
+                {
+                    data:"email",
+                    name:"email"
+                },
+                {
+                    data:"phone",
+                    name:"phone"
+                },
+                {
+                    data:"ip",
+                    name:"ip"
+                },
+                {
+                    data:"user_agent",
+                    name:"user_agent",
+                    searchable:"false",
+                    sortable:"false"
+                },
+                {
+                    data:"created_at",
+                    name:"created_at"
+                },
+                {
+                    data:"updated_at",
+                    name:"updated_at"
+                },
+                {
+                    data:"action",
+                    name:"action",
+                    searchable:"false",
+                    sortable:"false"
+                }
+            ],
+            order:[
+                [6,"desc"]
+            ]
+         } );
+
+        $(document).on('click','.delete',function(e){
+            e.preventDefault();
+
+            let id =$(this).data('id');
+
+            Swal.fire({
+                title: 'Are you sure ,You Want to delete?',
+                showCancelButton: true,
+                confirmButtonText: 'Confirm',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                   $.ajax({
+                       url:'/admin/admin-user/'+ id,
+                       type:'DELETE',
+                       success:function(){
+                           table.ajax.reload();
+                       }
+                   });
+                }
+            })
+         });
+    } );
     </script>
 
 @endsection
 
-{{-- $(document).ready(function() {
-    $('.Datatable').DataTable( {
-        processing : true,
-        serverSide : true,
-        ajax : "/admin/admin-user/datatable/ssd",
-        colums:[
-            {
-                data:"name",
-                name:"name"
-            },
-            {
-                data:"email",
-                name:"email"
-            },
-            {
-                data:"phone",
-                name:"phone"
-            }
-        ]
-    } );
-    } ); --}}
+
