@@ -21,9 +21,8 @@ class AdminUserController extends Controller
         $data = AdminUser::query();
         return Datatables::of($data)
         ->editColumn('user_agent',function($each){
-            if ($each->user_agent){
-
-                $agent = new Agent();
+            if ($each->user_agent){\
+                t54r5gftvvvvvvvvvvv                                        vcx4edws                $agent = new Agent();
                 $agent->setUserAgent($each->user_agent);
                 $device = $agent->device();
                 $platform = $agent->platform();
